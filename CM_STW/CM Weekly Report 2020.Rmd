@@ -1,0 +1,131 @@
+---
+title: "CM Weekly Report from STW 2020"
+author: "Yi"
+date: "6/8/2021"
+output: pdf_document
+---
+
+```{r message=FALSE}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/Other Shops/CM_STW")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Import Sheets
+CM <- length(excel_sheets("Amazon Sales Tracking - 2020 - Complete Mart.xlsx"))
+CompleteMart_2020 <- lapply(1:CM, function(i) read_excel("Amazon Sales Tracking - 2020 - Complete Mart.xlsx", sheet = i))
+
+```
+
+```{r}
+# Compelete Mart
+# First parameter: put in your CM
+# Second parameter: put in your week number
+# Love you !!!
+
+tidyCM_2020 <- function(CompleteMart_2020, weekNumber){
+  n <- weekNumber - 24
+  if(weekNumber <= 53){
+CompleteMart_2020 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_CM
+    
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 4]) -> colOne_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 6]) -> colTwo_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 7]) -> colThree_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 10]) -> colFour_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 9]) -> colFive_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 12]) -> colSix_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 14]) -> colSeven_CM
+CompleteMart_2020 %>%
+  map_dfr(~.[n, 32]) -> colEight_CM
+
+SKU_CM %>%
+  cbind(colOne_CM, colTwo_CM, colThree_CM, colFour_CM, colFive_CM, colSix_CM, colSeven_CM, colEight_CM) -> tmpVaribles_CM_2020
+tmpVaribles_CM_2020 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2020) %>%
+  select(Year, Week, everything())  -> finalDF_CM_2020
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_CM_2020)
+}
+```
+
+```{r message=FALSE, warning=TRUE, paged.print=TRUE}
+
+# run on our function: tidyBCL_2020()
+tidyCM_2020(CompleteMart_2020, 27) -> CM_week27
+tidyCM_2020(CompleteMart_2020, 28) -> CM_week28
+tidyCM_2020(CompleteMart_2020, 29) -> CM_week29
+tidyCM_2020(CompleteMart_2020, 30) -> CM_week30
+tidyCM_2020(CompleteMart_2020, 31) -> CM_week31
+tidyCM_2020(CompleteMart_2020, 32) -> CM_week32
+tidyCM_2020(CompleteMart_2020, 33) -> CM_week33
+tidyCM_2020(CompleteMart_2020, 34) -> CM_week34
+tidyCM_2020(CompleteMart_2020, 35) -> CM_week35
+tidyCM_2020(CompleteMart_2020, 36) -> CM_week36
+tidyCM_2020(CompleteMart_2020, 37) -> CM_week37
+tidyCM_2020(CompleteMart_2020, 38) -> CM_week38
+tidyCM_2020(CompleteMart_2020, 39) -> CM_week39
+tidyCM_2020(CompleteMart_2020, 40) -> CM_week40
+tidyCM_2020(CompleteMart_2020, 41) -> CM_week41
+tidyCM_2020(CompleteMart_2020, 42) -> CM_week42
+tidyCM_2020(CompleteMart_2020, 43) -> CM_week43
+tidyCM_2020(CompleteMart_2020, 44) -> CM_week44
+tidyCM_2020(CompleteMart_2020, 45) -> CM_week45
+tidyCM_2020(CompleteMart_2020, 46) -> CM_week46
+tidyCM_2020(CompleteMart_2020, 47) -> CM_week47
+tidyCM_2020(CompleteMart_2020, 48) -> CM_week48
+tidyCM_2020(CompleteMart_2020, 49) -> CM_week49
+tidyCM_2020(CompleteMart_2020, 50) -> CM_week50
+tidyCM_2020(CompleteMart_2020, 51) -> CM_week51
+tidyCM_2020(CompleteMart_2020, 52) -> CM_week52
+tidyCM_2020(CompleteMart_2020, 53) -> CM_week53
+
+CM_week27%>%
+  rbind(CM_week28) %>%
+  rbind(CM_week29) %>%
+  rbind(CM_week30) %>%
+  rbind(CM_week31) %>%
+  rbind(CM_week32) %>%
+  rbind(CM_week33) %>%
+  rbind(CM_week34) %>%
+  rbind(CM_week35) %>%
+  rbind(CM_week36) %>%
+  rbind(CM_week37) %>%
+  rbind(CM_week38) %>%
+  rbind(CM_week39) %>%
+  rbind(CM_week40) %>%
+  rbind(CM_week41) %>%
+  rbind(CM_week42) %>%
+  rbind(CM_week43) %>%
+  rbind(CM_week44) %>%
+  rbind(CM_week45) %>%
+  rbind(CM_week46) %>%
+  rbind(CM_week47) %>%
+  rbind(CM_week48) %>%
+  rbind(CM_week49) %>%
+  rbind(CM_week50) %>%
+  rbind(CM_week51) %>%
+  rbind(CM_week52) %>%
+  rbind(CM_week53) -> CompleteMart_2020_Week27to53
+
+# Export
+library("writexl")
+write_xlsx(CompleteMart_2020_Week27to53, "CompleteMart_2020_Week27to53.xlsx")
+
+```

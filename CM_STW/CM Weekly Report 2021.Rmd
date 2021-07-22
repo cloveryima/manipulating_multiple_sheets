@@ -1,0 +1,171 @@
+---
+title: "CM Weely Report from STW 2021"
+author: "Yi"
+date: "4/21/2021"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/Other Shops/CM_STW")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Import Sheets from Barcaloo and Thonapa for 2021
+CM <- length(excel_sheets("Amazon Sales Tracking - 2021 - Complete Mart.xlsx"))
+CompleteMart_2021 <- lapply(1:CM, function(i) read_excel("Amazon Sales Tracking - 2021 - Complete Mart.xlsx", sheet = i))
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Barcaloo 2021
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+tidyCM_2021 <- function(CompleteMart_2021, weekNumber){
+  n <- weekNumber + 1
+  if(weekNumber <= 53){
+CompleteMart_2021 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_CM
+    
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 4]) -> colOne_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 6]) -> colTwo_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 7]) -> colThree_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 10]) -> colFour_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 9]) -> colFive_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 12]) -> colSix_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 14]) -> colSeven_CM
+CompleteMart_2021 %>%
+  map_dfr(~.[n, 19]) -> colEight_CM
+
+#CompleteMart_2021[n] %>% #debug
+#modify_at(14, as.double) -> CompleteMart_2021 #debug
+#CompleteMart_2021 %>%
+#  map_dfr(~.[n, 14]) -> colSeven_CM
+
+SKU_CM %>%
+  cbind(colOne_CM, colTwo_CM, colThree_CM, colFour_CM, colFive_CM, colSix_CM, colSeven_CM, colEight_CM) -> tmpVaribles_CM_2021
+tmpVaribles_CM_2021 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2021) %>%
+  select(Year, Week, everything()) -> finalDF_CM_2021
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_CM_2021)
+}
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# run on our function: tidyBCL_2021()
+
+tidyCM_2021(CompleteMart_2021, 2) -> CM_week2
+tidyCM_2021(CompleteMart_2021, 3) -> CM_week3
+tidyCM_2021(CompleteMart_2021, 4) -> CM_week4
+tidyCM_2021(CompleteMart_2021, 5) -> CM_week5
+tidyCM_2021(CompleteMart_2021, 6) -> CM_week6
+tidyCM_2021(CompleteMart_2021, 7) -> CM_week7
+tidyCM_2021(CompleteMart_2021, 8) -> CM_week8
+tidyCM_2021(CompleteMart_2021, 9) -> CM_week9
+tidyCM_2021(CompleteMart_2021, 10) -> CM_week10
+tidyCM_2021(CompleteMart_2021, 11) -> CM_week11
+tidyCM_2021(CompleteMart_2021, 12) -> CM_week12
+tidyCM_2021(CompleteMart_2021, 13) -> CM_week13
+tidyCM_2021(CompleteMart_2021, 14) -> CM_week14
+tidyCM_2021(CompleteMart_2021, 15) -> CM_week15
+tidyCM_2021(CompleteMart_2021, 16) -> CM_week16
+tidyCM_2021(CompleteMart_2021, 17) -> CM_week17
+tidyCM_2021(CompleteMart_2021, 18) -> CM_week18
+tidyCM_2021(CompleteMart_2021, 19) -> CM_week19
+tidyCM_2021(CompleteMart_2021, 20) -> CM_week20
+tidyCM_2021(CompleteMart_2021, 21) -> CM_week21
+tidyCM_2021(CompleteMart_2021, 22) -> CM_week22
+tidyCM_2021(CompleteMart_2021, 23) -> CM_week23
+tidyCM_2021(CompleteMart_2021, 24) -> CM_week24
+tidyCM_2021(CompleteMart_2021, 25) -> CM_week25
+tidyCM_2021(CompleteMart_2021, 26) -> CM_week26
+tidyCM_2021(CompleteMart_2021, 27) -> CM_week27
+tidyCM_2021(CompleteMart_2021, 28) -> CM_week28
+tidyCM_2021(CompleteMart_2021, 29) -> CM_week29
+
+CM_week2 %>%
+  rbind(CM_week3) %>%
+  rbind(CM_week4) %>%
+  rbind(CM_week5) %>%
+  rbind(CM_week6) %>%
+  rbind(CM_week7) %>%
+  rbind(CM_week8) %>%
+  rbind(CM_week9) %>%
+  rbind(CM_week10) %>%
+  rbind(CM_week11) %>%
+  rbind(CM_week12) %>%
+  rbind(CM_week13) %>%
+  rbind(CM_week14) %>%
+  rbind(CM_week15) %>%
+  rbind(CM_week16) %>%
+  rbind(CM_week17) %>%
+  rbind(CM_week18) %>%
+  rbind(CM_week19) %>%
+  rbind(CM_week20) %>%
+  rbind(CM_week21) %>%
+  rbind(CM_week22) %>%
+  rbind(CM_week23) %>%
+  rbind(CM_week24) %>%
+  rbind(CM_week25) %>%
+  rbind(CM_week26) %>%
+  rbind(CM_week27) %>%
+  rbind(CM_week28) %>%
+  rbind(CM_week29) -> CompleteMart_2021
+
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+CompleteMart_2021 %>%
+  rename("Sell Through" = "Sell\r\nThrough") %>%
+  rename("AMZ\r\r\nSales" = "AMZ\r\nSales") %>%
+  rename("Net Profit\r\r\n(Incl. Storage)" = "Net Profit\r\n(Incl. Storage)") %>%
+  rename("Margin\r\r\n(Incl. Storage)" = "Margin\r\n(Incl. Storage)") -> CompleteMart_2021
+
+
+# Export
+library("writexl")
+write_xlsx(CompleteMart_2021, "CompleteMart_2021.xlsx")
+
+```
+
+```{r}
+
+# combine 2020 and 2021
+CM_2020_Weekly_Sales_Tracking <- read_xlsx("CompleteMart_2020_Week27to53.xlsx", guess_max = 10000)
+CM_2021_Weekly_Sales_Tracking <- read_xlsx("CompleteMart_2021.xlsx", guess_max = 10000)
+
+CM_2020_Weekly_Sales_Tracking %>%
+  rbind(CM_2021_Weekly_Sales_Tracking) -> CM_Weekly_Sales_Tracking
+
+CM_2020_Weekly_Sales_Tracking %>%
+  names()
+CM_2021_Weekly_Sales_Tracking %>%
+  names()
+
+library("writexl")
+write_xlsx(CM_Weekly_Sales_Tracking, "CM.xlsx")
+```
+

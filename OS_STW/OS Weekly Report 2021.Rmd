@@ -1,0 +1,418 @@
+---
+title: "OS Weely Report from STW 2021"
+author: "Yi"
+date: "4/19/2021"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/Other Shops/OS_STW")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Import Sheets from Barcaloo and Thonapa for 2021
+BL <- length(excel_sheets("Amazon Sales Tracking - 2021 - Barcaloo.xlsx"))
+Barcaloo_2021 <- lapply(1:BL, function(i) read_excel("Amazon Sales Tracking - 2021 - Barcaloo.xlsx", sheet = i))
+
+TH <- length(excel_sheets("Amazon Sales Tracking - 2021 - Thonapa.xlsx"))
+Thonapa_2021 <- lapply(1:TH, function(i) read_excel("Amazon Sales Tracking - 2021 - Thonapa.xlsx", sheet = i))
+
+UB <- length(excel_sheets("Amazon Sales Tracking - 2021 - Ubiquitty SKUs in OS.xlsx"))
+UBinOS_2021 <- lapply(1:UB, function(i) read_excel("Amazon Sales Tracking - 2021 - Ubiquitty SKUs in OS.xlsx", sheet = i))
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Barcaloo 2021
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+# 2021 starts with week 2 so n = weekNumnber + 1
+tidyBCL_2021 <- function(Barcaloo_2021, weekNumber){
+  n <- weekNumber + 1
+  if(weekNumber <= 52){
+Barcaloo_2021 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_BCL
+    
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 4]) -> colOne_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 6]) -> colTwo_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 7]) -> colThree_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 10]) -> colFour_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 9]) -> colFive_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 12]) -> colSix_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 14]) -> colSeven_BCL
+Barcaloo_2021 %>%
+  map_dfr(~.[n, 19]) -> colEight_BCL
+
+SKU_BCL %>%
+  cbind(colOne_BCL, colTwo_BCL, colThree_BCL, colFour_BCL, colFive_BCL, colSix_BCL, colSeven_BCL, colEight_BCL) -> tmpVaribles_BCL_2021
+tmpVaribles_BCL_2021 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2021) %>%
+  select(Year, Week, everything()) -> finalDF_BCL_2021
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_BCL_2021)
+}
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# run on our function: tidyBCL_2021()
+
+tidyBCL_2021(Barcaloo_2021, 2) -> BCL_week2
+tidyBCL_2021(Barcaloo_2021, 3) -> BCL_week3
+tidyBCL_2021(Barcaloo_2021, 4) -> BCL_week4
+tidyBCL_2021(Barcaloo_2021, 5) -> BCL_week5
+tidyBCL_2021(Barcaloo_2021, 6) -> BCL_week6
+tidyBCL_2021(Barcaloo_2021, 7) -> BCL_week7
+tidyBCL_2021(Barcaloo_2021, 8) -> BCL_week8
+tidyBCL_2021(Barcaloo_2021, 9) -> BCL_week9
+tidyBCL_2021(Barcaloo_2021, 10) -> BCL_week10
+tidyBCL_2021(Barcaloo_2021, 11) -> BCL_week11
+tidyBCL_2021(Barcaloo_2021, 12) -> BCL_week12
+tidyBCL_2021(Barcaloo_2021, 13) -> BCL_week13
+tidyBCL_2021(Barcaloo_2021, 14) -> BCL_week14
+tidyBCL_2021(Barcaloo_2021, 15) -> BCL_week15
+tidyBCL_2021(Barcaloo_2021, 16) -> BCL_week16
+tidyBCL_2021(Barcaloo_2021, 17) -> BCL_week17
+tidyBCL_2021(Barcaloo_2021, 18) -> BCL_week18
+tidyBCL_2021(Barcaloo_2021, 19) -> BCL_week19
+tidyBCL_2021(Barcaloo_2021, 20) -> BCL_week20
+tidyBCL_2021(Barcaloo_2021, 21) -> BCL_week21
+tidyBCL_2021(Barcaloo_2021, 22) -> BCL_week22
+tidyBCL_2021(Barcaloo_2021, 23) -> BCL_week23
+tidyBCL_2021(Barcaloo_2021, 24) -> BCL_week24
+tidyBCL_2021(Barcaloo_2021, 25) -> BCL_week25
+tidyBCL_2021(Barcaloo_2021, 26) -> BCL_week26
+tidyBCL_2021(Barcaloo_2021, 27) -> BCL_week27
+tidyBCL_2021(Barcaloo_2021, 28) -> BCL_week28
+tidyBCL_2021(Barcaloo_2021, 29) -> BCL_week29
+
+BCL_week2 %>%
+  rbind(BCL_week3) %>%
+  rbind(BCL_week4) %>%
+  rbind(BCL_week5) %>%
+  rbind(BCL_week6) %>%
+  rbind(BCL_week7) %>%
+  rbind(BCL_week8) %>%
+  rbind(BCL_week9) %>%
+  rbind(BCL_week10) %>%
+  rbind(BCL_week11) %>%
+  rbind(BCL_week12) %>%
+  rbind(BCL_week13) %>%
+  rbind(BCL_week14) %>%
+  rbind(BCL_week15) %>%
+  rbind(BCL_week16) %>%
+  rbind(BCL_week17) %>%
+  rbind(BCL_week18) %>%
+  rbind(BCL_week19) %>%
+  rbind(BCL_week20) %>%
+  rbind(BCL_week21) %>%
+  rbind(BCL_week22) %>%
+  rbind(BCL_week23) %>%
+  rbind(BCL_week24) %>%
+  rbind(BCL_week25) %>%
+  rbind(BCL_week26) %>%
+  rbind(BCL_week27) %>%
+  rbind(BCL_week28) %>%
+  rbind(BCL_week29) -> Barcaloo_2021
+
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+# Export
+library("writexl")
+write_xlsx(Barcaloo_2021, "Barcaloo_2021.xlsx")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Thonapa 2021
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+tidyTH_2021 <- function(Thonapa_2021, weekNumber){
+  n <- weekNumber + 1
+  if(weekNumber <= 52){
+Thonapa_2021 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_TH
+    
+Thonapa_2021 %>%
+  map_dfr(~.[n, 4]) -> colOne_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 6]) -> colTwo_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 7]) -> colThree_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 10]) -> colFour_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 9]) -> colFive_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 12]) -> colSix_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 14]) -> colSeven_TH
+Thonapa_2021 %>%
+  map_dfr(~.[n, 19]) -> colEight_TH
+
+SKU_TH %>%
+  cbind(colOne_TH, colTwo_TH, colThree_TH, colFour_TH, colFive_TH, colSix_TH, colSeven_TH, colEight_TH) -> tmpVaribles_TH_2021
+tmpVaribles_TH_2021 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2021) %>%
+  select(Year, Week, everything()) -> finalDF_TH_2021
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_TH_2021)
+}
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# run on our function: tidyBCL_2021()
+
+tidyTH_2021(Thonapa_2021, 2) -> TH_week2
+tidyTH_2021(Thonapa_2021, 3) -> TH_week3
+tidyTH_2021(Thonapa_2021, 4) -> TH_week4
+tidyTH_2021(Thonapa_2021, 5) -> TH_week5
+tidyTH_2021(Thonapa_2021, 6) -> TH_week6
+tidyTH_2021(Thonapa_2021, 7) -> TH_week7
+tidyTH_2021(Thonapa_2021, 8) -> TH_week8
+tidyTH_2021(Thonapa_2021, 9) -> TH_week9
+tidyTH_2021(Thonapa_2021, 10) -> TH_week10
+tidyTH_2021(Thonapa_2021, 11) -> TH_week11
+tidyTH_2021(Thonapa_2021, 12) -> TH_week12
+tidyTH_2021(Thonapa_2021, 13) -> TH_week13
+tidyTH_2021(Thonapa_2021, 14) -> TH_week14
+tidyTH_2021(Thonapa_2021, 15) -> TH_week15
+tidyTH_2021(Thonapa_2021, 16) -> TH_week16
+tidyTH_2021(Thonapa_2021, 17) -> TH_week17
+tidyTH_2021(Thonapa_2021, 18) -> TH_week18
+tidyTH_2021(Thonapa_2021, 19) -> TH_week19
+tidyTH_2021(Thonapa_2021, 20) -> TH_week20
+tidyTH_2021(Thonapa_2021, 21) -> TH_week21
+tidyTH_2021(Thonapa_2021, 22) -> TH_week22
+tidyTH_2021(Thonapa_2021, 23) -> TH_week23
+tidyTH_2021(Thonapa_2021, 24) -> TH_week24
+tidyTH_2021(Thonapa_2021, 25) -> TH_week25
+tidyTH_2021(Thonapa_2021, 26) -> TH_week26
+tidyTH_2021(Thonapa_2021, 27) -> TH_week27
+tidyTH_2021(Thonapa_2021, 28) -> TH_week28
+tidyTH_2021(Thonapa_2021, 29) -> TH_week29
+
+TH_week2 %>%
+  rbind(TH_week3) %>%
+  rbind(TH_week4) %>%
+  rbind(TH_week5) %>%
+  rbind(TH_week6) %>%
+  rbind(TH_week7) %>%
+  rbind(TH_week8) %>%
+  rbind(TH_week9) %>%
+  rbind(TH_week10) %>%
+  rbind(TH_week11) %>%
+  rbind(TH_week12) %>%
+  rbind(TH_week13) %>%
+  rbind(TH_week14) %>%
+  rbind(TH_week15) %>%
+  rbind(TH_week16) %>%
+  rbind(TH_week17) %>%
+  rbind(TH_week18) %>%
+  rbind(TH_week19) %>%
+  rbind(TH_week20) %>%
+  rbind(TH_week21) %>%
+  rbind(TH_week22) %>%
+  rbind(TH_week23) %>%
+  rbind(TH_week24) %>%
+  rbind(TH_week25) %>%
+  rbind(TH_week26) %>%
+  rbind(TH_week27) %>%
+  rbind(TH_week28) %>%
+  rbind(TH_week29) -> Thonapa_2021
+#str(Thonapa_2021_Week2to22)
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+# Export
+library("writexl")
+write_xlsx(Thonapa_2021, "Thonapa_2021.xlsx")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# UBinOs 2021
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+# 2021 starts with week 2 so n = weekNumnber + 1
+tidyUB_2021 <- function(UBinOS_2021, weekNumber){
+  n <- weekNumber + 1
+  if(weekNumber <= 52){
+UBinOS_2021 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_UB
+    
+UBinOS_2021 %>%
+  map_dfr(~.[n, 4]) -> colOne_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 6]) -> colTwo_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 7]) -> colThree_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 10]) -> colFour_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 9]) -> colFive_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 12]) -> colSix_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 14]) -> colSeven_UB
+UBinOS_2021 %>%
+  map_dfr(~.[n, 19]) -> colEight_UB
+
+SKU_UB %>%
+  cbind(colOne_UB, colTwo_UB, colThree_UB, colFour_UB, colFive_UB, colSix_UB, colSeven_UB, colEight_UB) -> tmpVaribles_UB_2021
+tmpVaribles_UB_2021 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2021) %>%
+  select(Year, Week, everything()) -> finalDF_UB_2021
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_UB_2021)
+}
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# run on our function: tidyBCL_2021()
+
+tidyUB_2021(UBinOS_2021, 2) -> UB_week2
+tidyUB_2021(UBinOS_2021, 3) -> UB_week3
+tidyUB_2021(UBinOS_2021, 4) -> UB_week4
+tidyUB_2021(UBinOS_2021, 5) -> UB_week5
+tidyUB_2021(UBinOS_2021, 6) -> UB_week6
+tidyUB_2021(UBinOS_2021, 7) -> UB_week7
+tidyUB_2021(UBinOS_2021, 8) -> UB_week8
+tidyUB_2021(UBinOS_2021, 9) -> UB_week9
+tidyUB_2021(UBinOS_2021, 10) -> UB_week10
+tidyUB_2021(UBinOS_2021, 11) -> UB_week11
+tidyUB_2021(UBinOS_2021, 12) -> UB_week12
+tidyUB_2021(UBinOS_2021, 13) -> UB_week13
+tidyUB_2021(UBinOS_2021, 14) -> UB_week14
+tidyUB_2021(UBinOS_2021, 15) -> UB_week15
+tidyUB_2021(UBinOS_2021, 16) -> UB_week16
+tidyUB_2021(UBinOS_2021, 17) -> UB_week17
+tidyUB_2021(UBinOS_2021, 18) -> UB_week18
+tidyUB_2021(UBinOS_2021, 19) -> UB_week19
+tidyUB_2021(UBinOS_2021, 20) -> UB_week20
+tidyUB_2021(UBinOS_2021, 21) -> UB_week21
+tidyUB_2021(UBinOS_2021, 22) -> UB_week22
+tidyUB_2021(UBinOS_2021, 23) -> UB_week23
+tidyUB_2021(UBinOS_2021, 24) -> UB_week24
+tidyUB_2021(UBinOS_2021, 25) -> UB_week25
+tidyUB_2021(UBinOS_2021, 26) -> UB_week26
+tidyUB_2021(UBinOS_2021, 27) -> UB_week27
+tidyUB_2021(UBinOS_2021, 28) -> UB_week28
+tidyUB_2021(UBinOS_2021, 29) -> UB_week29
+
+UB_week2 %>%
+  rbind(UB_week3) %>%
+  rbind(UB_week4) %>%
+  rbind(UB_week5) %>%
+  rbind(UB_week6) %>%
+  rbind(UB_week7) %>%
+  rbind(UB_week8) %>%
+  rbind(UB_week9) %>%
+  rbind(UB_week10) %>%
+  rbind(UB_week11) %>%
+  rbind(UB_week12) %>%
+  rbind(UB_week13) %>%
+  rbind(UB_week14) %>%
+  rbind(UB_week15) %>%
+  rbind(UB_week16) %>%
+  rbind(UB_week17) %>%
+  rbind(UB_week18) %>%
+  rbind(UB_week19) %>%
+  rbind(UB_week20) %>%
+  rbind(UB_week21) %>%
+  rbind(UB_week22) %>%
+  rbind(UB_week23) %>%
+  rbind(UB_week24) %>%
+  rbind(UB_week25) %>%
+  rbind(UB_week26) %>%
+  rbind(UB_week27) %>%
+  rbind(UB_week28) %>%
+  rbind(UB_week29) -> UBinOS_2021
+
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+# Export
+library("writexl")
+write_xlsx(UBinOS_2021, "UBinOS_2021.xlsx")
+
+```
+
+```{r}
+
+# combine
+Barcaloo_2021 %>%
+  rbind(Thonapa_2021) %>%
+  rbind(UBinOS_2021) -> OS_2021_Weekly_Sales_Tracking
+
+names(OS_2021_Weekly_Sales_Tracking)
+
+OS_2021_Weekly_Sales_Tracking %>%
+  rename("Sell Through" = "Sell\r\nThrough") %>%
+  rename("AMZ\r\r\nSales" = "AMZ\r\nSales") %>%
+  rename("Net Profit\r\r\n(Incl. Storage)" = "Net Profit\r\n(Incl. Storage)") %>%
+  rename("Margin\r\r\n(Incl. Storage)" = "Margin\r\n(Incl. Storage)") -> OS_2021_Weekly_Sales_Tracking
+    
+# Export
+library("writexl")
+write_xlsx(OS_2021_Weekly_Sales_Tracking, "OS_2021_Weekly_Sales_Tracking.xlsx")
+```
+
+```{r}
+
+# combine 2020 and 2021
+OS_2020_Weekly_Sales_Tracking <- read_xlsx("OS_2020_Weekly_Sales_Tracking.xlsx", guess_max = 10000)
+OS_2021_Weekly_Sales_Tracking <- read_xlsx("OS_2021_Weekly_Sales_Tracking.xlsx", guess_max = 10000)
+
+OS_2020_Weekly_Sales_Tracking %>%
+  rbind(OS_2021_Weekly_Sales_Tracking) -> OS_Weekly_Sales_Tracking
+
+library("writexl")
+write_xlsx(OS_Weekly_Sales_Tracking, "OS.xlsx")
+```
+

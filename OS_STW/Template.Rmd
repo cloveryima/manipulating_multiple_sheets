@@ -1,0 +1,201 @@
+---
+title: "OS Weekly Report from STW"
+author: "Yi"
+date: "3/31/2021"
+output: pdf_document
+---
+
+```{r}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/OS_STW")
+
+```
+
+```{r}
+# Import Sheets from Barcaloo and Thonapa for 2020
+BL1 <- length(excel_sheets("Amazon Sales Tracking - 2020 - Barcaloo.xlsx"))
+Barcaloo_2020 <- lapply(1:BL1, function(i) read_excel("Amazon Sales Tracking - 2020 - Barcaloo.xlsx", sheet = i))
+
+TH1 <- length(excel_sheets("Amazon Sales Tracking - 2020 - Thonapa.xlsx"))
+Thonapa_2020 <- lapply(1:TH1, function(i) read_excel("Amazon Sales Tracking - 2020 - Thonapa.xlsx", sheet = i))
+
+```
+
+```{r}
+# Import Sheets from Barcaloo and Thonapa for 2021
+BL2 <- length(excel_sheets("Amazon Sales Tracking - 2021 - Barcaloo.xlsx"))
+Barcaloo_2021 <- lapply(1:BL2, function(i) read_excel("Amazon Sales Tracking - 2021 - Barcaloo.xlsx", sheet = i))
+
+TH2 <- length(excel_sheets("Amazon Sales Tracking - 2021 - Thonapa.xlsx"))
+Thonapa_2021 <- lapply(1:TH2, function(i) read_excel("Amazon Sales Tracking - 2021 - Thonapa.xlsx", sheet = i))
+```
+
+```{r}
+# Get SKU, Sales, Revenue, PPC Spend, Net Profit, Margin, Sessions, QOH
+
+Barcaloo_2020 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU
+
+# Week One
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 4]) -> amzSales1
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 6]) -> Revenue1
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 7]) -> PPC1
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 10]) -> Profit1
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 9]) -> Margin1
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 12]) -> Sessions1
+Barcaloo_2020 %>%
+  map_dfr(~.[3, 14]) -> QOH1
+
+SKU %>%
+  cbind(amzSales1, Revenue1, PPC1, Profit1, Margin1, Sessions1, QOH1) -> Week1_BCL_2020
+Week1_BCL_2020 %>%
+ mutate(Week = 1) %>%
+  select(eek, everything()) -> Week1_BCL_2020
+
+# Week Two
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 4]) -> amzSales2
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 6]) -> Revenue2
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 7]) -> PPC2
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 10]) -> Profit2
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 9]) -> Margin2
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 12]) -> Sessions2
+Barcaloo_2020 %>%
+  map_dfr(~.[4, 14]) -> QOH2
+
+SKU %>%
+  cbind(amzSales2, Revenue2, PPC2, Profit2, Margin2, Sessions2, QOH2) -> Week2_BCL_2020
+
+# Week Three
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 4]) -> amzSales3
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 6]) -> Revenue3
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 7]) -> PPC3
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 10]) -> Profit3
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 9]) -> Margin3
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 12]) -> Sessions3
+Barcaloo_2020 %>%
+  map_dfr(~.[5, 14]) -> QOH3
+
+SKU %>%
+  cbind(amzSales3, Revenue3, PPC3, Profit3, Margin3, Sessions3, QOH3) -> Week3_BCL_2020
+
+```
+
+```{r}
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+tidyYiMa <- function(Barcaloo, weekNumber){
+  n <- weekNumber + 2
+  if(weekNumber <= 52){
+Barcaloo %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU
+    
+Barcaloo %>%
+  map_dfr(~.[n, 4]) -> colOne
+Barcaloo %>%
+  map_dfr(~.[n, 6]) -> colTwo
+Barcaloo %>%
+  map_dfr(~.[n, 7]) -> colThree
+Barcaloo %>%
+  map_dfr(~.[n, 10]) -> colFour
+Barcaloo %>%
+  map_dfr(~.[n, 9]) -> colFive
+Barcaloo%>%
+  map_dfr(~.[n, 12]) -> colSix
+Barcaloo %>%
+  map_dfr(~.[n, 14]) -> colSeven
+
+SKU %>%
+  cbind(colOne, colTwo, colThree, colFour, colFive, colSix, colSeven) -> tmpVaribles
+tmpVaribles %>%
+ mutate(Week = weekNumber) %>%
+  select(Week, everything()) -> finalDF
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF)
+}
+```
+
+```{r}
+# run on our function: tidyTiMa()
+tidyYiMa(Barcaloo_2020, 1) -> week1
+tidyYiMa(Barcaloo_2020, 2) -> week2
+tidyYiMa(Barcaloo_2020, 3) -> week3
+tidyYiMa(Barcaloo_2020, 4) -> week4
+tidyYiMa(Barcaloo_2020, 5) -> week5
+
+week1 %>%
+  rbind(week2) %>%
+  rbind(week3) %>%
+  rbind(week4) %>%
+  rbind(week5) -> weekOneToFive
+
+# testing: each week have 92 onservations
+weekOneToFive %>%
+  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+tidyYiMa(Barcaloo_2020, 53)
+```
+
+
+```{r}
+# Combine
+SKU %>%
+  cbind(Revenue, Profit_strg, Margin_strg, QOH) -> Week14_BCL
+
+# Export
+library("writexl")
+write_xlsx(Week14_BCL, "Week14_BCL.xlsx")
+```
+
+```{r}
+# Ensure that the position of ID is in [2,2] on each worksheet
+lst2 %>%
+  map_dfr(~.[1, 2]) -> dataFrameGetIDSecondMethod2
+
+# Join
+dataFrameGetIDSecondMethod1 %>%
+  full_join(dataFrameGetIDSecondMethod2) -> currentSKU
+
+currentSKU %>%
+  rename("SKU" = ...1) -> currentSKU
+
+# Export
+library("writexl")
+write_xlsx(currentSKU, "currentSKU.xlsx")  map_dfr(~.[1, 2]) -> dataFrameGetIDSecondMethod1
+
+```
+
+```{r}
+# export
+library("writexl")
+write_xlsx(masterSalesSheet, "masterSalesSheet.xlsx")
+
+```

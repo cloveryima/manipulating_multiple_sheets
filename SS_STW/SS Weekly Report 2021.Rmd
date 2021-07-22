@@ -1,0 +1,163 @@
+---
+title: "SS Weely Report from STW 2021"
+author: "Yi"
+date: "4/21/2021"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/Other Shops/SS_STW")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Import Sheets from Barcaloo and Thonapa for 2021
+SS <- length(excel_sheets("Amazon Sales Tracking - 2021 - Second Star.xlsx"))
+SecondStar_2021 <- lapply(1:SS, function(i) read_excel("Amazon Sales Tracking - 2021 - Second Star.xlsx", sheet = i))
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Barcaloo 2021
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+tidySS_2021 <- function(SecondStar_2021, weekNumber){
+  n <- weekNumber + 1
+  if(weekNumber <= 53){
+SecondStar_2021 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_SS
+    
+SecondStar_2021 %>%
+  map_dfr(~.[n, 4]) -> colOne_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 6]) -> colTwo_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 7]) -> colThree_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 10]) -> colFour_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 9]) -> colFive_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 12]) -> colSix_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 14]) -> colSeven_SS
+SecondStar_2021 %>%
+  map_dfr(~.[n, 19]) -> colEight_SS
+
+SKU_SS %>%
+  cbind(colOne_SS, colTwo_SS, colThree_SS, colFour_SS, colFive_SS, colSix_SS, colSeven_SS, colEight_SS) -> tmpVaribles_SS_2021
+tmpVaribles_SS_2021 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2021) %>%
+  select(Year, Week, everything()) -> finalDF_SS_2021
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_SS_2021)
+}
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# run on our function: tidyBCL_2021()
+
+tidySS_2021(SecondStar_2021, 2) -> SS_week2
+tidySS_2021(SecondStar_2021, 3) -> SS_week3
+tidySS_2021(SecondStar_2021, 4) -> SS_week4
+tidySS_2021(SecondStar_2021, 5) -> SS_week5
+tidySS_2021(SecondStar_2021, 6) -> SS_week6
+tidySS_2021(SecondStar_2021, 7) -> SS_week7
+tidySS_2021(SecondStar_2021, 8) -> SS_week8
+tidySS_2021(SecondStar_2021, 9) -> SS_week9
+tidySS_2021(SecondStar_2021, 10) -> SS_week10
+tidySS_2021(SecondStar_2021, 11) -> SS_week11
+tidySS_2021(SecondStar_2021, 12) -> SS_week12
+tidySS_2021(SecondStar_2021, 13) -> SS_week13
+tidySS_2021(SecondStar_2021, 14) -> SS_week14
+tidySS_2021(SecondStar_2021, 15) -> SS_week15
+tidySS_2021(SecondStar_2021, 16) -> SS_week16
+tidySS_2021(SecondStar_2021, 17) -> SS_week17
+tidySS_2021(SecondStar_2021, 18) -> SS_week18
+tidySS_2021(SecondStar_2021, 19) -> SS_week19
+tidySS_2021(SecondStar_2021, 20) -> SS_week20
+tidySS_2021(SecondStar_2021, 21) -> SS_week21
+tidySS_2021(SecondStar_2021, 22) -> SS_week22
+tidySS_2021(SecondStar_2021, 23) -> SS_week23
+tidySS_2021(SecondStar_2021, 24) -> SS_week24
+tidySS_2021(SecondStar_2021, 25) -> SS_week25
+tidySS_2021(SecondStar_2021, 26) -> SS_week26
+tidySS_2021(SecondStar_2021, 27) -> SS_week27
+tidySS_2021(SecondStar_2021, 28) -> SS_week28
+tidySS_2021(SecondStar_2021, 29) -> SS_week29
+
+
+SS_week2 %>%
+  rbind(SS_week3) %>%
+  rbind(SS_week4) %>%
+  rbind(SS_week5) %>%
+  rbind(SS_week6) %>%
+  rbind(SS_week7) %>%
+  rbind(SS_week8) %>%
+  rbind(SS_week9) %>%
+  rbind(SS_week10) %>%
+  rbind(SS_week11) %>%
+  rbind(SS_week12) %>%
+  rbind(SS_week13) %>%
+  rbind(SS_week14) %>%
+  rbind(SS_week15) %>%
+  rbind(SS_week16) %>%
+  rbind(SS_week17) %>%
+  rbind(SS_week18) %>%
+  rbind(SS_week19) %>%
+  rbind(SS_week20) %>%
+  rbind(SS_week21) %>%
+  rbind(SS_week22) %>%
+  rbind(SS_week23) %>%
+  rbind(SS_week24) %>%
+  rbind(SS_week25) %>%
+  rbind(SS_week26) %>%
+  rbind(SS_week27) %>%
+  rbind(SS_week28) %>%
+  rbind(SS_week29) -> SecondStar_2021
+
+#str(SecondStar_2021_Week2to22)
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+SecondStar_2021 %>%
+  rename("Sell Through" = "Sell \r\nThrough") %>%
+  rename("AMZ\r\r\nSales" = "AMZ\r\nSales") %>%
+  rename("Net Profit\r\r\n(Incl. Storage)" = "Net Profit\r\n(Incl. Storage)") %>%
+  rename("Margin\r\r\n(Incl. Storage)" = "Margin\r\n(Incl. Storage)") -> SecondStar_2021
+
+# Export
+library("writexl")
+write_xlsx(SecondStar_2021, "SS_2021_Weekly_Sales_Tracking.xlsx")
+
+```
+
+```{r}
+
+# combine 2020 and 2021
+SS_2020_Weekly_Sales_Tracking <- read_xlsx("SecondStar_2020_Week1to53.xlsx", guess_max = 10000)
+SS_2021_Weekly_Sales_Tracking <- read_xlsx("SS_2021_Weekly_Sales_Tracking.xlsx", guess_max = 10000)
+
+SS_2020_Weekly_Sales_Tracking %>%
+  rbind(SS_2021_Weekly_Sales_Tracking) -> SS_Weekly_Sales_Tracking
+
+library("writexl")
+write_xlsx(SS_Weekly_Sales_Tracking, "SS.xlsx")
+```
+
+

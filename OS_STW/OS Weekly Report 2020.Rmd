@@ -1,0 +1,375 @@
+---
+title: "OS Weekly Report from STW 2020"
+author: "Yi"
+date: "3/31/2021"
+output: pdf_document
+---
+
+```{r}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/Other Shops/OS_STW")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Import Sheets from Barcaloo and Thonapa for 2020
+BL <- length(excel_sheets("Amazon Sales Tracking - 2020 - Barcaloo.xlsx"))
+Barcaloo_2020 <- lapply(1:BL, function(i) read_excel("Amazon Sales Tracking - 2020 - Barcaloo.xlsx", sheet = i))
+
+TH <- length(excel_sheets("Amazon Sales Tracking - 2020 - Thonapa.xlsx"))
+Thonapa_2020 <- lapply(1:TH, function(i) read_excel("Amazon Sales Tracking - 2020 - Thonapa.xlsx", sheet = i))
+
+```
+
+```{r}
+# Barcaloo 2020
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+tidyBCL_2020 <- function(Barcaloo_2020, weekNumber){
+  n <- weekNumber + 2
+  if(weekNumber <= 53){
+Barcaloo_2020 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_BCL
+    
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 4]) -> colOne_BCL
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 6]) -> colTwo_BCL
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 7]) -> colThree_BCL
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 10]) -> colFour_BCL
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 9]) -> colFive_BCL
+Barcaloo_2020%>%
+  map_dfr(~.[n, 12]) -> colSix_BCL
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 14]) -> colSeven_BCL
+Barcaloo_2020 %>%
+  map_dfr(~.[n, 32]) -> colEight_BCL
+
+SKU_BCL %>%
+  cbind(colOne_BCL, colTwo_BCL, colThree_BCL, colFour_BCL, colFive_BCL, colSix_BCL, colSeven_BCL, colEight_BCL) -> tmpVaribles_BCL_2020
+tmpVaribles_BCL_2020 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2020) %>%
+  select(Year, Week, everything())  -> finalDF_BCL_2020
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_BCL_2020)
+}
+```
+
+```{r message=FALSE, warning=TRUE, paged.print=TRUE}
+
+# run on our function: tidyBCL_2020()
+tidyBCL_2020(Barcaloo_2020, 1) -> BCL_week1
+tidyBCL_2020(Barcaloo_2020, 2) -> BCL_week2
+tidyBCL_2020(Barcaloo_2020, 3) -> BCL_week3
+tidyBCL_2020(Barcaloo_2020, 4) -> BCL_week4
+tidyBCL_2020(Barcaloo_2020, 5) -> BCL_week5
+tidyBCL_2020(Barcaloo_2020, 6) -> BCL_week6
+tidyBCL_2020(Barcaloo_2020, 7) -> BCL_week7
+tidyBCL_2020(Barcaloo_2020, 8) -> BCL_week8
+tidyBCL_2020(Barcaloo_2020, 9) -> BCL_week9
+tidyBCL_2020(Barcaloo_2020, 10) -> BCL_week10
+tidyBCL_2020(Barcaloo_2020, 11) -> BCL_week11
+tidyBCL_2020(Barcaloo_2020, 12) -> BCL_week12
+tidyBCL_2020(Barcaloo_2020, 13) -> BCL_week13
+tidyBCL_2020(Barcaloo_2020, 14) -> BCL_week14
+tidyBCL_2020(Barcaloo_2020, 15) -> BCL_week15
+tidyBCL_2020(Barcaloo_2020, 16) -> BCL_week16
+tidyBCL_2020(Barcaloo_2020, 17) -> BCL_week17
+tidyBCL_2020(Barcaloo_2020, 18) -> BCL_week18
+tidyBCL_2020(Barcaloo_2020, 19) -> BCL_week19
+tidyBCL_2020(Barcaloo_2020, 20) -> BCL_week20
+tidyBCL_2020(Barcaloo_2020, 21) -> BCL_week21
+tidyBCL_2020(Barcaloo_2020, 22) -> BCL_week22
+tidyBCL_2020(Barcaloo_2020, 23) -> BCL_week23
+tidyBCL_2020(Barcaloo_2020, 24) -> BCL_week24
+tidyBCL_2020(Barcaloo_2020, 25) -> BCL_week25
+tidyBCL_2020(Barcaloo_2020, 26) -> BCL_week26
+tidyBCL_2020(Barcaloo_2020, 27) -> BCL_week27
+tidyBCL_2020(Barcaloo_2020, 28) -> BCL_week28
+tidyBCL_2020(Barcaloo_2020, 29) -> BCL_week29
+tidyBCL_2020(Barcaloo_2020, 30) -> BCL_week30
+tidyBCL_2020(Barcaloo_2020, 31) -> BCL_week31
+tidyBCL_2020(Barcaloo_2020, 32) -> BCL_week32
+tidyBCL_2020(Barcaloo_2020, 33) -> BCL_week33
+tidyBCL_2020(Barcaloo_2020, 34) -> BCL_week34
+tidyBCL_2020(Barcaloo_2020, 35) -> BCL_week35
+tidyBCL_2020(Barcaloo_2020, 36) -> BCL_week36
+tidyBCL_2020(Barcaloo_2020, 37) -> BCL_week37
+tidyBCL_2020(Barcaloo_2020, 38) -> BCL_week38
+tidyBCL_2020(Barcaloo_2020, 39) -> BCL_week39
+tidyBCL_2020(Barcaloo_2020, 40) -> BCL_week40
+tidyBCL_2020(Barcaloo_2020, 41) -> BCL_week41
+tidyBCL_2020(Barcaloo_2020, 42) -> BCL_week42
+tidyBCL_2020(Barcaloo_2020, 43) -> BCL_week43
+tidyBCL_2020(Barcaloo_2020, 44) -> BCL_week44
+tidyBCL_2020(Barcaloo_2020, 45) -> BCL_week45
+tidyBCL_2020(Barcaloo_2020, 46) -> BCL_week46
+tidyBCL_2020(Barcaloo_2020, 47) -> BCL_week47
+tidyBCL_2020(Barcaloo_2020, 48) -> BCL_week48
+tidyBCL_2020(Barcaloo_2020, 49) -> BCL_week49
+tidyBCL_2020(Barcaloo_2020, 50) -> BCL_week50
+tidyBCL_2020(Barcaloo_2020, 51) -> BCL_week51
+tidyBCL_2020(Barcaloo_2020, 52) -> BCL_week52
+tidyBCL_2020(Barcaloo_2020, 53) -> BCL_week53
+
+BCL_week1 %>%
+  rbind(BCL_week2) %>%
+  rbind(BCL_week3) %>%
+  rbind(BCL_week4) %>%
+  rbind(BCL_week5) %>%
+  rbind(BCL_week6) %>%
+  rbind(BCL_week7) %>%
+  rbind(BCL_week8) %>%
+  rbind(BCL_week9) %>%
+  rbind(BCL_week10) %>%
+  rbind(BCL_week11) %>%
+  rbind(BCL_week12) %>%
+  rbind(BCL_week13) %>%
+  rbind(BCL_week14) %>%
+  rbind(BCL_week15) %>%
+  rbind(BCL_week16) %>%
+  rbind(BCL_week17) %>%
+  rbind(BCL_week18) %>%
+  rbind(BCL_week19) %>%
+  rbind(BCL_week20) %>%
+  rbind(BCL_week21) %>%
+  rbind(BCL_week22) %>%
+  rbind(BCL_week23) %>%
+  rbind(BCL_week24) %>%
+  rbind(BCL_week25) %>%
+  rbind(BCL_week26) %>%
+  rbind(BCL_week27) %>%
+  rbind(BCL_week28) %>%
+  rbind(BCL_week29) %>%
+  rbind(BCL_week30) %>%
+  rbind(BCL_week31) %>%
+  rbind(BCL_week32) %>%
+  rbind(BCL_week33) %>%
+  rbind(BCL_week34) %>%
+  rbind(BCL_week35) %>%
+  rbind(BCL_week36) %>%
+  rbind(BCL_week37) %>%
+  rbind(BCL_week38) %>%
+  rbind(BCL_week39) %>%
+  rbind(BCL_week40) %>%
+  rbind(BCL_week41) %>%
+  rbind(BCL_week42) %>%
+  rbind(BCL_week43) %>%
+  rbind(BCL_week44) %>%
+  rbind(BCL_week45) %>%
+  rbind(BCL_week46) %>%
+  rbind(BCL_week47) %>%
+  rbind(BCL_week48) %>%
+  rbind(BCL_week49) %>%
+  rbind(BCL_week50) %>%
+  rbind(BCL_week51) %>%
+  rbind(BCL_week52) %>%
+  rbind(BCL_week53) -> Barcaloo_2020_Week1to53
+
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+# Export
+library("writexl")
+write_xlsx(Barcaloo_2020_Week1to53, "Barcaloo_2020_Week1to53.xlsx")
+
+```
+
+```{r}
+# Thonapa 2020
+# First parameter: put in your Thonapa
+# Second parameter: put in your week number
+# Love you !!!
+
+tidyTH_2020 <- function(Thonapa_2020, weekNumber){
+  n <- weekNumber + 2
+  if(weekNumber <= 53){
+Thonapa_2020 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_TH
+    
+Thonapa_2020 %>%
+  map_dfr(~.[n, 4]) -> colOne_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 6]) -> colTwo_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 7]) -> colThree_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 10]) -> colFour_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 9]) -> colFive_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 12]) -> colSix_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 14]) -> colSeven_TH
+Thonapa_2020 %>%
+  map_dfr(~.[n, 32]) -> colEight_TH
+
+SKU_TH %>%
+  cbind(colOne_TH, colTwo_TH, colThree_TH, colFour_TH, colFive_TH, colSix_TH, colSeven_TH, colEight_TH) -> tmpVaribles_TH
+tmpVaribles_TH %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2020) %>%
+  select(Year, Week, everything()) -> finalDF_TH_2020
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_TH_2020)
+}
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+#run on our function: tidyTH_2020()
+
+tidyTH_2020(Thonapa_2020, 1) -> TH_week1
+tidyTH_2020(Thonapa_2020, 2) -> TH_week2
+tidyTH_2020(Thonapa_2020, 3) -> TH_week3
+tidyTH_2020(Thonapa_2020, 4) -> TH_week4
+tidyTH_2020(Thonapa_2020, 5) -> TH_week5
+tidyTH_2020(Thonapa_2020, 6) -> TH_week6
+tidyTH_2020(Thonapa_2020, 7) -> TH_week7
+tidyTH_2020(Thonapa_2020, 8) -> TH_week8
+tidyTH_2020(Thonapa_2020, 9) -> TH_week9
+tidyTH_2020(Thonapa_2020, 10) -> TH_week10
+tidyTH_2020(Thonapa_2020, 11) -> TH_week11
+tidyTH_2020(Thonapa_2020, 12) -> TH_week12
+tidyTH_2020(Thonapa_2020, 13) -> TH_week13
+tidyTH_2020(Thonapa_2020, 14) -> TH_week14
+tidyTH_2020(Thonapa_2020, 15) -> TH_week15
+tidyTH_2020(Thonapa_2020, 16) -> TH_week16
+tidyTH_2020(Thonapa_2020, 17) -> TH_week17
+tidyTH_2020(Thonapa_2020, 18) -> TH_week18
+tidyTH_2020(Thonapa_2020, 19) -> TH_week19
+tidyTH_2020(Thonapa_2020, 20) -> TH_week20
+tidyTH_2020(Thonapa_2020, 21) -> TH_week21
+tidyTH_2020(Thonapa_2020, 22) -> TH_week22
+tidyTH_2020(Thonapa_2020, 23) -> TH_week23
+tidyTH_2020(Thonapa_2020, 24) -> TH_week24
+tidyTH_2020(Thonapa_2020, 25) -> TH_week25
+tidyTH_2020(Thonapa_2020, 26) -> TH_week26
+tidyTH_2020(Thonapa_2020, 27) -> TH_week27
+tidyTH_2020(Thonapa_2020, 28) -> TH_week28
+tidyTH_2020(Thonapa_2020, 29) -> TH_week29
+tidyTH_2020(Thonapa_2020, 30) -> TH_week30
+tidyTH_2020(Thonapa_2020, 31) -> TH_week31
+tidyTH_2020(Thonapa_2020, 32) -> TH_week32
+tidyTH_2020(Thonapa_2020, 33) -> TH_week33
+tidyTH_2020(Thonapa_2020, 34) -> TH_week34
+tidyTH_2020(Thonapa_2020, 35) -> TH_week35
+tidyTH_2020(Thonapa_2020, 36) -> TH_week36
+tidyTH_2020(Thonapa_2020, 37) -> TH_week37
+tidyTH_2020(Thonapa_2020, 38) -> TH_week38
+tidyTH_2020(Thonapa_2020, 39) -> TH_week39
+tidyTH_2020(Thonapa_2020, 40) -> TH_week40
+tidyTH_2020(Thonapa_2020, 41) -> TH_week41
+tidyTH_2020(Thonapa_2020, 42) -> TH_week42
+tidyTH_2020(Thonapa_2020, 43) -> TH_week43
+tidyTH_2020(Thonapa_2020, 44) -> TH_week44
+tidyTH_2020(Thonapa_2020, 45) -> TH_week45
+tidyTH_2020(Thonapa_2020, 46) -> TH_week46
+tidyTH_2020(Thonapa_2020, 47) -> TH_week47
+tidyTH_2020(Thonapa_2020, 48) -> TH_week48
+tidyTH_2020(Thonapa_2020, 49) -> TH_week49
+tidyTH_2020(Thonapa_2020, 50) -> TH_week50
+tidyTH_2020(Thonapa_2020, 51) -> TH_week51
+tidyTH_2020(Thonapa_2020, 52) -> TH_week52
+tidyTH_2020(Thonapa_2020, 53) -> TH_week53
+
+TH_week1 %>%
+  rbind(TH_week2) %>%
+  rbind(TH_week3) %>%
+  rbind(TH_week4) %>%
+  rbind(TH_week5) %>%
+  rbind(TH_week6) %>%
+  rbind(TH_week7) %>%
+  rbind(TH_week8) %>%
+  rbind(TH_week9) %>%
+  rbind(TH_week10) %>%
+  rbind(TH_week11) %>%
+  rbind(TH_week12) %>%
+  rbind(TH_week13) %>%
+  rbind(TH_week14) %>%
+  rbind(TH_week15) %>%
+  rbind(TH_week16) %>%
+  rbind(TH_week17) %>%
+  rbind(TH_week18) %>%
+  rbind(TH_week19) %>%
+  rbind(TH_week20) %>%
+  rbind(TH_week21) %>%
+  rbind(TH_week22) %>%
+  rbind(TH_week23) %>%
+  rbind(TH_week24) %>%
+  rbind(TH_week25) %>%
+  rbind(TH_week26) %>%
+  rbind(TH_week27) %>%
+  rbind(TH_week28) %>%
+  rbind(TH_week29) %>%
+  rbind(TH_week30) %>%
+  rbind(TH_week31) %>%
+  rbind(TH_week32) %>%
+  rbind(TH_week33) %>%
+  rbind(TH_week34) %>%
+  rbind(TH_week35) %>%
+  rbind(TH_week36) %>%
+  rbind(TH_week37) %>%
+  rbind(TH_week38) %>%
+  rbind(TH_week39) %>%
+  rbind(TH_week40) %>%
+  rbind(TH_week41) %>%
+  rbind(TH_week42) %>%
+  rbind(TH_week43) %>%
+  rbind(TH_week44) %>%
+  rbind(TH_week45) %>%
+  rbind(TH_week46) %>%
+  rbind(TH_week47) %>%
+  rbind(TH_week48) %>%
+  rbind(TH_week49) %>%
+  rbind(TH_week50) %>%
+  rbind(TH_week51) %>%
+  rbind(TH_week52) %>%
+  rbind(TH_week53) -> Thonapa_2020_Week1to53
+
+Thonapa_2020_Week1to53 %>%
+  rename(`PPC Spend` = `PPC Costs` ) -> Thonapa_2020_Week1to53
+
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+# Export
+library("writexl")
+write_xlsx(Thonapa_2020_Week1to53, "Thonapa_2020_Week1to53.xlsx")
+
+```
+
+```{r}
+#Combine Barcaloo and Thonapa
+
+Barcaloo_2020_Week1to53 %>%
+  rbind(Thonapa_2020_Week1to53) -> OS_2020_Weekly_Sales_Tracking
+
+# Export
+library("writexl")
+write_xlsx(OS_2020_Weekly_Sales_Tracking, "OS_2020_Weekly_Sales_Tracking.xlsx")
+```

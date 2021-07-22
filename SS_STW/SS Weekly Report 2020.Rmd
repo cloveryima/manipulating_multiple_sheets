@@ -1,0 +1,190 @@
+---
+title: "SS Weekly Report from STW 2020"
+author: "Yi"
+date: "4/21/2021"
+output: pdf_document
+---
+
+```{r}
+# install libraries
+library(tidyverse)
+library(readxl)
+#setting working directory
+setwd("/Users/Yi/Downloads/Other Shops/SS_STW")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Import Sheets from Barcaloo and Thonapa for 2020
+SS <- length(excel_sheets("Amazon Sales Tracking - 2020 - Second Star.xlsx"))
+SecondStar_2020 <- lapply(1:SS, function(i) read_excel("Amazon Sales Tracking - 2020 - Second Star.xlsx", sheet = i))
+
+```
+
+```{r}
+# Second Star 2020
+# First parameter: put in your Barcaloo
+# Second parameter: put in your week number
+# Love you !!!
+
+tidySS_2020 <- function(SecondStar_2020, weekNumber){
+  n <- weekNumber + 2
+  if(weekNumber <= 53){
+SecondStar_2020 %>%
+  map_dfr(~.[1, 2]) %>%
+  rename("SKU" = ...1) -> SKU_SS
+    
+SecondStar_2020 %>%
+  map_dfr(~.[n, 4]) -> colOne_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 6]) -> colTwo_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 7]) -> colThree_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 10]) -> colFour_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 9]) -> colFive_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 12]) -> colSix_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 14]) -> colSeven_SS
+SecondStar_2020 %>%
+  map_dfr(~.[n, 32]) -> colEight_SS
+
+SKU_SS %>%
+  cbind(colOne_SS, colTwo_SS, colThree_SS, colFour_SS, colFive_SS, colSix_SS, colSeven_SS, colEight_SS) -> tmpVaribles_SS_2020
+tmpVaribles_SS_2020 %>%
+ mutate(Week = weekNumber) %>%
+  mutate(Year = 2020) %>%
+  select(Year, Week, everything())  -> finalDF_SS_2020
+
+  }else{
+    print("ERROR!!! please send a email to yc6705a@american.edu for debugging")
+  }
+  return(finalDF_SS_2020)
+}
+```
+
+```{r message=FALSE, warning=TRUE, paged.print=TRUE}
+
+# run on our function: tidyBCL_2020()
+tidySS_2020(SecondStar_2020, 1) -> SS_week1
+tidySS_2020(SecondStar_2020, 2) -> SS_week2
+tidySS_2020(SecondStar_2020, 3) -> SS_week3
+tidySS_2020(SecondStar_2020, 4) -> SS_week4
+tidySS_2020(SecondStar_2020, 5) -> SS_week5
+tidySS_2020(SecondStar_2020, 6) -> SS_week6
+tidySS_2020(SecondStar_2020, 7) -> SS_week7
+tidySS_2020(SecondStar_2020, 8) -> SS_week8
+tidySS_2020(SecondStar_2020, 9) -> SS_week9
+tidySS_2020(SecondStar_2020, 10) -> SS_week10
+tidySS_2020(SecondStar_2020, 11) -> SS_week11
+tidySS_2020(SecondStar_2020, 12) -> SS_week12
+tidySS_2020(SecondStar_2020, 13) -> SS_week13
+tidySS_2020(SecondStar_2020, 14) -> SS_week14
+tidySS_2020(SecondStar_2020, 15) -> SS_week15
+tidySS_2020(SecondStar_2020, 16) -> SS_week16
+tidySS_2020(SecondStar_2020, 17) -> SS_week17
+tidySS_2020(SecondStar_2020, 18) -> SS_week18
+tidySS_2020(SecondStar_2020, 19) -> SS_week19
+tidySS_2020(SecondStar_2020, 20) -> SS_week20
+tidySS_2020(SecondStar_2020, 21) -> SS_week21
+tidySS_2020(SecondStar_2020, 22) -> SS_week22
+tidySS_2020(SecondStar_2020, 23) -> SS_week23
+tidySS_2020(SecondStar_2020, 24) -> SS_week24
+tidySS_2020(SecondStar_2020, 25) -> SS_week25
+tidySS_2020(SecondStar_2020, 26) -> SS_week26
+tidySS_2020(SecondStar_2020, 27) -> SS_week27
+tidySS_2020(SecondStar_2020, 28) -> SS_week28
+tidySS_2020(SecondStar_2020, 29) -> SS_week29
+tidySS_2020(SecondStar_2020, 30) -> SS_week30
+tidySS_2020(SecondStar_2020, 31) -> SS_week31
+tidySS_2020(SecondStar_2020, 32) -> SS_week32
+tidySS_2020(SecondStar_2020, 33) -> SS_week33
+tidySS_2020(SecondStar_2020, 34) -> SS_week34
+tidySS_2020(SecondStar_2020, 35) -> SS_week35
+tidySS_2020(SecondStar_2020, 36) -> SS_week36
+tidySS_2020(SecondStar_2020, 37) -> SS_week37
+tidySS_2020(SecondStar_2020, 38) -> SS_week38
+tidySS_2020(SecondStar_2020, 39) -> SS_week39
+tidySS_2020(SecondStar_2020, 40) -> SS_week40
+tidySS_2020(SecondStar_2020, 41) -> SS_week41
+tidySS_2020(SecondStar_2020, 42) -> SS_week42
+tidySS_2020(SecondStar_2020, 43) -> SS_week43
+tidySS_2020(SecondStar_2020, 44) -> SS_week44
+tidySS_2020(SecondStar_2020, 45) -> SS_week45
+tidySS_2020(SecondStar_2020, 46) -> SS_week46
+tidySS_2020(SecondStar_2020, 47) -> SS_week47
+tidySS_2020(SecondStar_2020, 48) -> SS_week48
+tidySS_2020(SecondStar_2020, 49) -> SS_week49
+tidySS_2020(SecondStar_2020, 50) -> SS_week50
+tidySS_2020(SecondStar_2020, 51) -> SS_week51
+tidySS_2020(SecondStar_2020, 52) -> SS_week52
+tidySS_2020(SecondStar_2020, 53) -> SS_week53
+
+SS_week1 %>%
+  rbind(SS_week2) %>%
+  rbind(SS_week3) %>%
+  rbind(SS_week4) %>%
+  rbind(SS_week5) %>%
+  rbind(SS_week6) %>%
+  rbind(SS_week7) %>%
+  rbind(SS_week8) %>%
+  rbind(SS_week9) %>%
+  rbind(SS_week10) %>%
+  rbind(SS_week11) %>%
+  rbind(SS_week12) %>%
+  rbind(SS_week13) %>%
+  rbind(SS_week14) %>%
+  rbind(SS_week15) %>%
+  rbind(SS_week16) %>%
+  rbind(SS_week17) %>%
+  rbind(SS_week18) %>%
+  rbind(SS_week19) %>%
+  rbind(SS_week20) %>%
+  rbind(SS_week21) %>%
+  rbind(SS_week22) %>%
+  rbind(SS_week23) %>%
+  rbind(SS_week24) %>%
+  rbind(SS_week25) %>%
+  rbind(SS_week26) %>%
+  rbind(SS_week27) %>%
+  rbind(SS_week28) %>%
+  rbind(SS_week29) %>%
+  rbind(SS_week30) %>%
+  rbind(SS_week31) %>%
+  rbind(SS_week32) %>%
+  rbind(SS_week33) %>%
+  rbind(SS_week34) %>%
+  rbind(SS_week35) %>%
+  rbind(SS_week36) %>%
+  rbind(SS_week37) %>%
+  rbind(SS_week38) %>%
+  rbind(SS_week39) %>%
+  rbind(SS_week40) %>%
+  rbind(SS_week41) %>%
+  rbind(SS_week42) %>%
+  rbind(SS_week43) %>%
+  rbind(SS_week44) %>%
+  rbind(SS_week45) %>%
+  rbind(SS_week46) %>%
+  rbind(SS_week47) %>%
+  rbind(SS_week48) %>%
+  rbind(SS_week49) %>%
+  rbind(SS_week50) %>%
+  rbind(SS_week51) %>%
+  rbind(SS_week52) %>%
+  rbind(SS_week53) -> SecondStar_2020_Week1to53
+
+# testing: each week have 92 onservations
+#Barcaloo_2020_Week1to52 %>%
+#  count(Week)
+
+# if your weekly number > 52, the code will.........Look at this
+# tidyBCL_2020(Barcaloo_2020, 53)
+
+# Export
+library("writexl")
+write_xlsx(SecondStar_2020_Week1to53, "SecondStar_2020_Week1to53.xlsx")
+
+```
